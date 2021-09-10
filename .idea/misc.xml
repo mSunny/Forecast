@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/add_location_fragment.xml" value="0.20520833333333333" />
+        <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/forecast_fragment.xml" value="0.16666666666666666" />
+        <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/location_item.xml" value="0.24427083333333333" />
         <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/main_activity.xml" value="0.2957427536231884" />
         <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/main_fragment.xml" value="0.2957427536231884" />
+        <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/select_location_fragment.xml" value="0.24427083333333333" />
+        <entry key="..\:/Sunny/Programming/Forecast/app/src/main/res/layout/suggested_location_item.xml" value="0.2875" />
       </map>
     </option>
   </component>
