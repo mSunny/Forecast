@@ -2,7 +2,6 @@ package com.example.forecast.ui.add_location
 
 import android.annotation.SuppressLint
 import android.util.Log
-
 import androidx.lifecycle.ViewModel
 import com.example.forecast.data.db.Location
 import com.example.forecast.domain.AddLocationInteractor
@@ -25,8 +24,10 @@ val addLocationInteractor: AddLocationInteractor) : ViewModel() {
     fun getCurrentLocation(fusedLocationProviderClient: FusedLocationProviderClient) {
         fusedLocationProviderClient.lastLocation.addOnSuccessListener { androidLocation ->
             //TODO: Get location name via geocoding
-            val location = Location(DEFAULT_CURRENT_LOCATION_NAME, androidLocation.latitude, androidLocation.longitude)
-            locationSubject.onNext(location)
+            androidLocation?.let {
+                val location = Location(DEFAULT_CURRENT_LOCATION_NAME, androidLocation.latitude, androidLocation.longitude)
+                locationSubject.onNext(location)
+            }
         }
     }
 
@@ -37,7 +38,6 @@ val addLocationInteractor: AddLocationInteractor) : ViewModel() {
     }
 
     fun addLocationToSelected(location: Location) {
-        Log.d("LOCATION", "addLocationToSelected")
         addLocationInteractor.addLocation(location).subscribe{ _->
             addedLocationSubject.onNext(location)
         }

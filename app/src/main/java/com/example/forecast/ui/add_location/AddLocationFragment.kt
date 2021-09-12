@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,29 +33,27 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
 
     companion object {
         fun newInstance() = AddLocationFragment()
-        val TAG: String = AddLocationFragment::class.java.simpleName
         var PERMISSIONS = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
         )
     }
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: AddLocationViewModel
     private val mainViewModel: MainViewModel by activityViewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private var _binding: AddLocationFragmentBinding? = null
-    private val binding get() = _binding!!
-    var compositeDisposable: CompositeDisposable? = null
-
+    private var binding: AddLocationFragmentBinding? = null
+    private var compositeDisposable: CompositeDisposable? = null
     private var suggestedLocationsAdapter: SuggestedLocationsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = AddLocationFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
+        binding = AddLocationFragmentBinding.inflate(inflater, container, false)
+        val view = binding!!.root
         return view
     }
 
@@ -77,20 +74,24 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
         }
         compositeDisposable?.add(disposable)
 
-        binding.buttonAdd.setOnClickListener(::onAddClick)
-        suggestedLocationsAdapter = SuggestedLocationsAdapter(::onItemClick)
-        binding.recyclerViewSuggestions.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewSuggestions.adapter = suggestedLocationsAdapter
-        binding.editTextTextFindLocation.doOnTextChanged { text, start, before, count ->
-            if (count > 0) {
-                viewModel.getPossibleLocations(text.toString())
+        binding?.let {
+            it.buttonAdd.setOnClickListener(::onAddClick)
+            suggestedLocationsAdapter = SuggestedLocationsAdapter(::onItemClick)
+            it.recyclerViewSuggestions.layoutManager = LinearLayoutManager(requireContext())
+            it.recyclerViewSuggestions.adapter = suggestedLocationsAdapter
+            it.editTextTextFindLocation.doOnTextChanged { text, start, before, count ->
+                if (count > 0) {
+                    viewModel.getPossibleLocations(text.toString())
+                }
             }
         }
+        checkForPermission()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         compositeDisposable?.clear()
+        binding = null
     }
     override fun onResume() {
         super.onResume()
@@ -127,7 +128,7 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
                 requestCurrentLocation()
             } else if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
                 showExplanationDialog()
-        } else {
+            } else {
                 permReqLauncher.launch(
                     PERMISSIONS
                 )
@@ -135,7 +136,6 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
         }
     }
 
-    // util method
     private fun hasPermissions(context: Context, permissions: Array<String>): Boolean = permissions.all {
         ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }
@@ -161,7 +161,7 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
     }
 
     fun showCurrentLocation(location: Location) {
-        binding.textViewCurrentLocation.text = getString(R.string.lat_long, location.latitude.toString(), location.longitude.toString())
+        binding?.textViewCurrentLocation?.text = getString(R.string.lat_long, location.latitude.toString(), location.longitude.toString())
     }
 
     fun updateSearchView(possibleLocations: List<Location>){
@@ -170,7 +170,6 @@ class AddLocationFragment : Fragment(), LifecycleObserver {
     }
 
     fun onItemClick(item: Location) {
-        Log.d("LOCATION00", "onItemClick")
         viewModel.addLocationToSelected(item)
     }
 

@@ -1,30 +1,23 @@
 package com.example.forecast.ui.forecast
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import com.example.forecast.App
 import com.example.forecast.R
 import com.example.forecast.data.db.Location
 import com.example.forecast.data.network.BaseWeatherInfo
-import com.example.forecast.databinding.AddLocationFragmentBinding
 import com.example.forecast.databinding.ForecastFragmentBinding
-import com.example.forecast.databinding.SelectLocationFragmentBinding
-import com.example.forecast.ui.add_location.AddLocationViewModel
-import com.example.forecast.ui.add_location.SuggestedLocationsAdapter
 import com.example.forecast.ui.injectViewModel
 import com.example.forecast.ui.main.MainViewModel
-import com.google.android.gms.location.LocationServices
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -33,9 +26,8 @@ class ForecastFragment : Fragment(), LifecycleObserver {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: ForecastViewModel
     private val mainViewModel: MainViewModel by activityViewModels()
-    private var _binding: ForecastFragmentBinding? = null
-    private val binding get() = _binding!!
-    var compositeDisposable: CompositeDisposable? = null
+    private var binding: ForecastFragmentBinding? = null
+    private var compositeDisposable: CompositeDisposable? = null
 
     companion object {
         fun newInstance() = ForecastFragment()
@@ -57,16 +49,16 @@ class ForecastFragment : Fragment(), LifecycleObserver {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ForecastFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
+        binding = ForecastFragmentBinding.inflate(inflater, container, false)
+        val view = binding!!.root
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         compositeDisposable = CompositeDisposable()
-        binding.buttonAddNewLocation.setOnClickListener(::onAddClick)
-        binding.buttonSelectNewLocation.setOnClickListener(::onSelectClick)
+        binding?.buttonAddNewLocation?.setOnClickListener(::onAddClick)
+        binding?.buttonSelectNewLocation?.setOnClickListener(::onSelectClick)
         val location = mainViewModel.selectedLocation
         location?.let {
             viewModel.getForecast(location)
@@ -80,13 +72,16 @@ class ForecastFragment : Fragment(), LifecycleObserver {
     override fun onDestroyView() {
         super.onDestroyView()
         compositeDisposable?.clear()
+        binding = null
     }
 
     fun updateWeatherInfo(location: Location, baseWeatherInfo: BaseWeatherInfo) {
-        binding.textViewTitle.text = getString(R.string.forecast_title, location.name)
-        binding.textViewTemperature.text = getString(R.string.temperature, baseWeatherInfo.temperature)
-        binding.textViewHumidity.text = getString(R.string.humidity,baseWeatherInfo.humidity)
-        binding.textViewPressure.text = getString(R.string.pressure, baseWeatherInfo.pressure)
+        binding?.let {
+            it.textViewTitle.text = getString(R.string.forecast_title, location.name)
+            it.textViewTemperature.text = getString(R.string.temperature, baseWeatherInfo.temperature)
+            it.textViewHumidity.text = getString(R.string.humidity,baseWeatherInfo.humidity)
+            it.textViewPressure.text = getString(R.string.pressure, baseWeatherInfo.pressure)
+        }
     }
 
     fun onAddClick(v: View) {

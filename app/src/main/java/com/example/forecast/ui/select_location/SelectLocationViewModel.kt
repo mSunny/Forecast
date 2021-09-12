@@ -11,18 +11,18 @@ class SelectLocationViewModel(val requestSavedLocationsInteractor: RequestSavedL
                               val removeLocationInteractor: RemoveLocationInteractor): ViewModel() {
     val locationsSubject = BehaviorSubject.create<List<Location>>()
     init {
-
+        requestLocations()
     }
 
     fun requestLocations() {
-        requestSavedLocationsInteractor.requestLocations().subscribe({
-            locations -> locationsSubject.onNext(locations)
-        })
+        requestSavedLocationsInteractor.requestLocations().subscribe { locations ->
+            locationsSubject.onNext(locations)
+        }
     }
 
     fun removeLocation(locationId: Long) {
-        removeLocationInteractor.removeLocation(locationId).subscribe({
-            _ -> requestLocations()
-        })
+        removeLocationInteractor.removeLocation(locationId).subscribe { _ ->
+            requestLocations()
+        }
     }
 }

@@ -27,8 +27,7 @@ class SelectLocationFragment : Fragment(), LifecycleObserver {
     }
 
     private var adapter = LocationsAdapter(::onItemClick, ::onRemoveItemClick)
-    private var _binding: SelectLocationFragmentBinding? = null
-    private val binding get() = _binding!!
+    private var binding: SelectLocationFragmentBinding? = null
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var viewModel: SelectLocationViewModel
@@ -38,9 +37,9 @@ class SelectLocationFragment : Fragment(), LifecycleObserver {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = SelectLocationFragmentBinding.inflate(inflater, container, false)
-        val view = binding.root
+    ): View {
+        binding = SelectLocationFragmentBinding.inflate(inflater, container, false)
+        val view = binding!!.root
         return view
     }
 
@@ -59,9 +58,10 @@ class SelectLocationFragment : Fragment(), LifecycleObserver {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         compositeDisposable = CompositeDisposable()
-        binding.locationRecyclerView.adapter = adapter
-        binding.locationRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        viewModel.requestLocations()
+        binding?.let {
+            it.locationRecyclerView.adapter = adapter
+            it.locationRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        }
         val disposable = viewModel.locationsSubject.subscribe{ locations ->
             adapter.items = locations
             adapter.notifyDataSetChanged()
@@ -72,6 +72,7 @@ class SelectLocationFragment : Fragment(), LifecycleObserver {
     override fun onDestroyView() {
         super.onDestroyView()
         compositeDisposable?.clear()
+        binding = null
     }
 
     fun onItemClick(location: Location) {
@@ -81,10 +82,4 @@ class SelectLocationFragment : Fragment(), LifecycleObserver {
     fun onRemoveItemClick(itemId: Long) {
         viewModel.removeLocation(itemId)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
 }

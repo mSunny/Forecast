@@ -17,16 +17,14 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var mainViewModel: MainViewModel
-
-    var compositeDisposable: CompositeDisposable? = null
+    private var compositeDisposable: CompositeDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         (applicationContext as App).diManager.appComponent.inject(this)
         mainViewModel= this.injectViewModel(viewModelFactory)
         setContentView(R.layout.main_activity)
-        mainViewModel.getSavedLocations()
+
         compositeDisposable = CompositeDisposable()
         val disposable = mainViewModel.currentFragmentSubject.subscribe{ currentFragment ->
             val fragment = when (currentFragment) {
@@ -34,9 +32,9 @@ class MainActivity : AppCompatActivity() {
                 MainViewModel.CurrentFragmentShown.ADD_LOCATION -> AddLocationFragment.newInstance()
                 MainViewModel.CurrentFragmentShown.SELECT_LOCATION -> SelectLocationFragment.newInstance()
             }
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment)
-                    .commitNow()
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commitNow()
         }
         compositeDisposable?.add(disposable)
     }

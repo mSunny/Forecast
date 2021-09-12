@@ -10,6 +10,9 @@ class MainViewModel(val requestSavedLocationsInteractor: RequestSavedLocationsIn
     var selectedLocation: Location? = null
     val currentFragmentSubject = BehaviorSubject.create<CurrentFragmentShown>()
 
+    init {
+        getSavedLocations()
+    }
     fun switchFragment(currentFragmentShown: CurrentFragmentShown) {
         currentFragmentSubject.onNext(currentFragmentShown)
     }
