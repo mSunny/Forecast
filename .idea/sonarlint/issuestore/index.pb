@@ -1,22 +1,16 @@
 
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-v
-Fapp/src/main/java/com/example/forecast/domain/AddLocationInteractor.kt,1\c\1c19be6528ebdce3525c6997264750741a7176eb
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
 ]
 -app/src/main/java/com/example/forecast/App.kt,b\c\bced5c535b2185237c2248abaca3a7fa9b2a17dd
-i
-9app/src/main/java/com/example/forecast/di/AppComponent.kt,0\8\08858c97d74699d13eaab9314fd7b44b76c6ca95
 m
 =app/src/main/java/com/example/forecast/data/db/AppDatabase.kt,0\4\044c362e00178a45a7e14fea00a0bf32ae2ec048
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 f
 6app/src/main/java/com/example/forecast/di/DiManager.kt,5\f\5f3d13d78fedec71002e18f179a6828eb247ba6a
-}
-Mapp/src/main/java/com/example/forecast/data/network/ForecastRepositoryImpl.kt,c\9\c9472780446e6dbce73b284e43d21446ed2ff002
 w
 Gapp/src/main/java/com/example/forecast/data/network/ForecastResponse.kt,2\2\22f233f93118c94d7aa7ae1d9d5733f7d43dac2f
 v
@@ -25,10 +19,6 @@ Fapp/src/main/java/com/example/forecast/domain/GetForecastInteractor.kt,2\5\259
 Oapp/src/main/java/com/example/forecast/domain/GetPossibleLocationsInteractor.kt,0\8\08449a1ec6ff32ba3ddc6b5a44f1e31d80cdc504
 m
 =app/src/main/java/com/example/forecast/data/db/LocationDao.kt,2\0\202bcc6de14eeb57ea94efef6939d5b7cb6eeb75
-t
-Dapp/src/main/java/com/example/forecast/data/db/LocationRepository.kt,1\b\1bd4c488695164f15d3bbce6e6302e1e0bbd3c26
-x
-Happ/src/main/java/com/example/forecast/data/db/LocationRepositoryImpl.kt,2\2\22ee44ebb8aafeb1c3b24d3db8d5ef465c091a64
 }
 Mapp/src/main/java/com/example/forecast/ui/select_location/LocationsAdapter.kt,b\f\bfd8c1aafad2d52c49e8e6c189e5f864bcd3474d
 |
@@ -37,8 +27,6 @@ y
 Iapp/src/main/java/com/example/forecast/domain/RemoveLocationInteractor.kt,2\6\260a0509f169c7f43fda5a802cd1cb09aed969d3
 €
 Papp/src/main/java/com/example/forecast/domain/RequestSavedLocationsInteractor.kt,e\5\e5e799e9bcc3fa05eb387077f0e76a874dfff57d
-g
-7app/src/main/java/com/example/forecast/di/RoomModule.kt,7\9\7923121a614f9ac3ac974f6431ff83c7e0a86454
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 ƒ
@@ -47,5 +35,3 @@ i
 9app/src/main/java/com/example/forecast/ui/ViewModelExt.kt,8\3\836c39e347d0706dad2da312e70e013f50013b4c
 m
 =app/src/main/java/com/example/forecast/di/ViewModelFactory.kt,c\f\cfeab978b0d607464007a7dbae8cb501e32356bb
-l
-<app/src/main/java/com/example/forecast/di/ViewModelModule.kt,0\e\0e27f1c1fc4c55193e0fabbde6db2fc1eedd1c91
